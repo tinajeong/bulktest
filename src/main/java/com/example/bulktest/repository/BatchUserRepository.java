@@ -24,7 +24,7 @@ public class BatchUserRepository implements UserRepository {
     @Override
     @Transactional
     public void saveAll(List<User> userList) {
-        jdbcTemplate.batchUpdate("INSERT INTO TEST(NAME,EMAIL,ADDRESS) VALUES(?,?,?)",
+        jdbcTemplate.batchUpdate("INSERT INTO USER(NAME,EMAIL,ADDRESS) VALUES(?,?,?)",
                 userList,
                 batchSize,
                 (PreparedStatement ps, User user) -> {

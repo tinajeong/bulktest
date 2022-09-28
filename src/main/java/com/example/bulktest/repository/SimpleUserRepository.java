@@ -25,7 +25,7 @@ public class SimpleUserRepository implements UserRepository {
     public void saveAll(List<User> userList) {
 
         for (User user : userList) {
-            jdbcTemplate.update("INSERT INTO TEST(NAME,EMAIL,ADDRESS) VALUES(?,?,?)",
+            jdbcTemplate.update("INSERT INTO USER(NAME,EMAIL,ADDRESS) VALUES(?,?,?)",
                     user.getName(),
                     user.getEmail(),
                     user.getAddress());
