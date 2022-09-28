@@ -13,7 +13,7 @@ import java.util.Collections;
 @Slf4j
 class BatchUserServiceIntegrationTest {
 
-    int dataRowCount = 100_000;
+    int dataRowCount = 1_000_000;
 
     @Autowired
     SimpleUserService simpleUserService;
@@ -79,6 +79,36 @@ class BatchUserServiceIntegrationTest {
     @Test
     public void 배치사이즈_10000() {
         int batchSize = 10000;
+        log.info("insert {} {}", String.join("", Collections.nCopies(30, ">")),batchSize);
+        batchUserService.setBatchSize(batchSize);
+        long normalElapsedTime = simpleUserService.createUser(dataRowCount);
+        long batchElapsedTime = batchUserService.createUser(dataRowCount);
+
+        log.info(String.join("", Collections.nCopies(60, "-")));
+
+        log.info(String.format("%-20s%-5s%-10s%-5s%8sms (%s s)", "Regular inserts", "|", dataRowCount, "|", normalElapsedTime, normalElapsedTime / 1000));
+        log.info(String.format("%-20s%-5s%-10s%-5s%8sms (%s s)", "Batch inserts", "|", dataRowCount, "|", batchElapsedTime, batchElapsedTime / 1000));
+    }
+
+
+    @Test
+    public void 배치사이즈_50000() {
+        int batchSize = 50000;
+        log.info("insert {} {}", String.join("", Collections.nCopies(30, ">")),batchSize);
+        batchUserService.setBatchSize(batchSize);
+        long normalElapsedTime = simpleUserService.createUser(dataRowCount);
+        long batchElapsedTime = batchUserService.createUser(dataRowCount);
+
+        log.info(String.join("", Collections.nCopies(60, "-")));
+
+        log.info(String.format("%-20s%-5s%-10s%-5s%8sms (%s s)", "Regular inserts", "|", dataRowCount, "|", normalElapsedTime, normalElapsedTime / 1000));
+        log.info(String.format("%-20s%-5s%-10s%-5s%8sms (%s s)", "Batch inserts", "|", dataRowCount, "|", batchElapsedTime, batchElapsedTime / 1000));
+    }
+
+
+    @Test
+    public void 배치사이즈_100000() {
+        int batchSize = 100000;
         log.info("insert {} {}", String.join("", Collections.nCopies(30, ">")),batchSize);
         batchUserService.setBatchSize(batchSize);
         long normalElapsedTime = simpleUserService.createUser(dataRowCount);

@@ -26,17 +26,17 @@ public class BulkTestApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        int[] batchSizeArray = {1, 10, 100, 1_000, 10_000}; //1_000, 10_000, 100_000
+        int[] dateSizeArray = {1, 10, 100, 1_000, 10_000, 100_000};
 
         log.info("insert {}", String.join("", Collections.nCopies(50, ">")));
-        for (int batchSize : batchSizeArray) {
-            long normalElapsedTime = simpleUserService.createUser(batchSize);
-            long batchElapsedTime = batchUserService.createUser(batchSize);
+        for (int dataSize : dateSizeArray) {
+            long normalElapsedTime = simpleUserService.createUser(dataSize);
+            long batchElapsedTime = batchUserService.createUser(dataSize);
 
             log.info(String.join("", Collections.nCopies(60, "-")));
 
-            log.info(String.format("%-20s%-5s%-10s%-5s%8sms (%s s)", "Regular inserts", "|", batchSize, "|", normalElapsedTime, normalElapsedTime / 1000));
-            log.info(String.format("%-20s%-5s%-10s%-5s%8sms (%s s)", "Batch inserts", "|", batchSize, "|", batchElapsedTime, batchElapsedTime / 1000));
+            log.info(String.format("%-20s%-5s%-10s%-5s%8sms (%s s)", "Regular inserts", "|", dataSize, "|", normalElapsedTime, normalElapsedTime / 1000));
+            log.info(String.format("%-20s%-5s%-10s%-5s%8sms (%s s)", "Batch inserts", "|", dataSize, "|", batchElapsedTime, batchElapsedTime / 1000));
             log.info(String.format("Total gain: %d %s", calculateGainInPercent(normalElapsedTime, batchElapsedTime), "%"));
         }
     }
